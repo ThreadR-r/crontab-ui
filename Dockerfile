@@ -18,12 +18,15 @@ RUN   apk --no-cache add \
       supervisor \
       tzdata \
       python3 \
-      py3-pip
+      py3-pyzmq \
+      py3-pip \
+      g++
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY . /crontab-ui
 
-RUN   python3 -m pip install papermill
+RUN   python3 -m pip --no-cache-dir install wheel ipython ipykernel papermill
+RUN   ipython kernel install --name "python3" --user
 RUN   npm install
 
 ENV   HOST 0.0.0.0
