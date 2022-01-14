@@ -16,11 +16,14 @@ RUN   apk --no-cache add \
       nodejs \
       npm \
       supervisor \
-      tzdata
+      tzdata \
+      python3 \
+      py3-pip
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY . /crontab-ui
 
+RUN   python3 -m pip install papermill
 RUN   npm install
 
 ENV   HOST 0.0.0.0
